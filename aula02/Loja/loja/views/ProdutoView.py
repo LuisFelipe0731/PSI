@@ -20,7 +20,7 @@ def list_produto_view(request, id=None):
         produtos = produtos.filter(criado_em__gte=now)
     
     if produto is not None:
-        produtos = produtos.filter(Produto=produto)
+        produtos = produtos.filter(Produto__contains=produto)
     if promocao is not None:
         produtos = produtos.filter(promocao=promocao)
     if destaque is not None:
