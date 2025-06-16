@@ -3,6 +3,21 @@ from loja.models import Produto
 from datetime import timedelta, datetime
 from django.utils import timezone
 
+def delete_produto_postback(request, id=None):
+# Processa o post back gerado pela action
+    if request.method == 'POST':
+    # Salva dados editados
+        id = request.POST.get("id")
+        produto = request.POST.get("Produto")
+        print("postback-delete")
+        print(id)
+        try:
+            Produto.objects.filter(id=id).delete()
+            print("Produto %s excluido com sucesso" % produto)
+        except Exception as e:
+            print("Erro salvando edição de produto: %s" % e)
+    return redirect("/produto")
+
 def details_produto_view(request, id=None):
     # Processa o evento GET gerado pela action
     produtos = Produto.objects.all()
