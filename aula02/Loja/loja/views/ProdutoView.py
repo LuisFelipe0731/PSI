@@ -136,19 +136,26 @@ def create_produto_view(request, id=None):
         promocao = request.POST.get("promocao")
         msgPromocao = request.POST.get("msgPromocao")
         preco = request.POST.get("preco")
+        categoria = request.POST.get("CategoriaFk")
+        fabricante = request.POST.get("FabricanteFk")
         image = request.POST.get("image")
+
         print("postback-create")
         print(produto)
         print(destaque)
         print(promocao)
         print(msgPromocao)
         print(preco)
+        print(categoria)
+        print(fabricante)
         print(image)
         try:
             obj_produto = Produto()
             obj_produto.Produto = produto
             obj_produto.destaque = (destaque is not None)
             obj_produto.promocao = (promocao is not None)
+            obj_produto.fabricante = Fabricante.objects.filter(id=fabricante).first()
+            obj_produto.categoria = Categoria.objects.filter(id=categoria).first()
             if msgPromocao is not None:
                 obj_produto.msgPromocao = msgPromocao
             obj_produto.preco = 0
@@ -166,8 +173,10 @@ def create_produto_view(request, id=None):
                     filename = fs.save(imagefile.name, imagefile)
                     if (filename is not None) and (filename != ""):
                         obj_produto.image = filename
+            
             obj_produto.save()
-            print("Produto %s salvo com sucesso" % produto)
+            print("Produto %s inserido com sucesso" % produto)
+        
         except Exception as e:
             print("Erro inserindo produto: %s" % e)
         return redirect("/produto")
