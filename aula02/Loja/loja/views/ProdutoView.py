@@ -4,6 +4,7 @@ from datetime import timedelta, datetime
 from django.utils import timezone
 from django.core.files.storage import FileSystemStorage
 
+#Deletar postback
 def delete_produto_postback(request, id=None):
 # Processa o post back gerado pela action
     if request.method == 'POST':
@@ -19,6 +20,7 @@ def delete_produto_postback(request, id=None):
             print("Erro salvando edição de produto: %s" % e)
     return redirect("/produto")
 
+#detalhar
 def details_produto_view(request, id=None):
     # Processa o evento GET gerado pela action
     produtos = Produto.objects.all()
@@ -29,6 +31,7 @@ def details_produto_view(request, id=None):
     context = {'produto': produto}
     return render(request, template_name='produto/produto-details.html', context=context, status=200)
 
+#deletar
 def delete_produto_view(request, id=None):
     # Processa o evento GET gerado pela action
     produtos = Produto.objects.all()
@@ -41,7 +44,7 @@ def delete_produto_view(request, id=None):
     context = {'produto': produto}
     return render(request, template_name='produto/produto-delete.html', context=context, status=200)
 
-#Edicao de produtos
+#Edicao de produtos postback
 def edit_produto_postback(request, id=None):
     if request.method == 'POST':
     # Salva dados editados
@@ -79,7 +82,7 @@ def edit_produto_postback(request, id=None):
     
     return redirect("/produto")
 
-#Pagina de edicao de produtos
+#edicao de produtos
 def edit_produto_view(request, id=None):
     produtos = Produto.objects.all()
     if id is not None:
@@ -125,6 +128,7 @@ def list_produto_view(request, id=None):
     context = { 'produtos': produtos }
     return render(request, template_name='produto/produto.html', context=context, status=200)
 
+#criar produto
 def create_produto_view(request, id=None):
     if request.method == 'POST':
         produto = request.POST.get("Produto")
