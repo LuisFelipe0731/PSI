@@ -149,10 +149,7 @@ def create_produto_view(request, id=None):
         categoria = request.POST.get("CategoriaFk")
         fabricante = request.POST.get("FabricanteFk")
         image = request.POST.get("image")
-        Fabricantes = Fabricante.objects.all()
-        Categorias = Categoria.objects.all()
         
-
         print("postback-create")
         print(produto)
         print(destaque)
