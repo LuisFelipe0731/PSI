@@ -41,13 +41,16 @@ def details_produto_view(request, id=None):
 def delete_produto_view(request, id=None):
     # Processa o evento GET gerado pela action
     produtos = Produto.objects.all()
+
+    Fabricantes = Fabricante.objects.all()
+    Categorias = Categoria.objects.all()
     
     if id is not None:
         produtos = produtos.filter(id=id)
     produto = produtos.first()
     
     print(produto)
-    context = {'produto': produto}
+    context = {'produto': produto, 'fabricantes': Fabricantes, 'categorias': Categorias}
     return render(request, template_name='produto/produto-delete.html', context=context, status=200)
 
 #Edicao de produtos postback
@@ -138,6 +141,8 @@ def list_produto_view(request, id=None):
 #criar produto
 def create_produto_view(request, id=None):
     
+    Fabricantes = Fabricante.objects.all()
+    Categorias = Categoria.objects.all()
     
     if request.method == 'POST':
         
@@ -195,4 +200,5 @@ def create_produto_view(request, id=None):
         except Exception as e:
             print("Erro inserindo produto: %s" % e)
         return redirect("/produto")
-    return render(request, template_name='produto/produto-create.html', status=200)
+    context = {'fabricantes' : Fabricantes, 'categorias' : Categorias}
+    return render(request, template_name='produto/produto-create.html', context=context, status=200)
