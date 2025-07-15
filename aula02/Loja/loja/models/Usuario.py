@@ -12,18 +12,18 @@ class Usuario(models.Model):
     
     def __str__(self):
         return '{}'.format(self.user.username)
-    @receiver(post_save, sender=User)
 
     #criar usuario
+    @receiver(post_save, sender=User)
     def create_user_usuario(sender, instance, created, **kwargs):
         try:
             if created:
                 Usuario.objects.create(user=instance)
         except:
             pass
-    @receiver(post_save, sender=User)
     
     #salvar usuario
+    @receiver(post_save, sender=User)
     def save_user_usuario(sender, instance, **kwargs):
         try:
             instance.usuario.save()
