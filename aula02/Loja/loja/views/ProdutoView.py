@@ -180,6 +180,7 @@ def create_produto_view(request, id=None):
             obj_produto.criado_em = timezone.now()
             obj_produto.alterado_em = obj_produto.criado_em
             
+            #fabricantes e categorias
             obj_produto.fabricante = Fabricante.objects.filter(id=fabricante).first()
             obj_produto.categoria = Categoria.objects.filter(id=categoria).first()
             
@@ -200,5 +201,8 @@ def create_produto_view(request, id=None):
         except Exception as e:
             print("Erro inserindo produto: %s" % e)
         return redirect("/produto")
+    
+    #context para o sistema localizar os fabricantes e categorias
     context = {'fabricantes' : Fabricantes, 'categorias' : Categorias}
+    
     return render(request, template_name='produto/produto-create.html', context=context, status=200)
