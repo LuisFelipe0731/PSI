@@ -1,10 +1,9 @@
-from multiprocessing import context
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect # Retire from django.http import HttpResponse
 from loja.models import Produto, Fabricante, Categoria
 from datetime import timedelta, datetime
 from django.utils import timezone
 from django.core.files.storage import FileSystemStorage
-
 #Deletar postback
 def delete_produto_postback(request, id=None):
 # Processa o post back gerado pela action
@@ -53,7 +52,7 @@ def delete_produto_view(request, id=None):
     context = {'produto': produto, 'fabricantes': Fabricantes, 'categorias': Categorias}
     return render(request, template_name='produto/produto-delete.html', context=context, status=200)
 
-#Edicao de produtos postback
+@login_required
 def edit_produto_postback(request, id=None):
     if request.method == 'POST':
     # Salva dados editados
