@@ -14,3 +14,5 @@ PERFIL = (
     (2, 'Usuario')
 )
 from .Usuario import Usuario
+from .Carrinho import Carrinho
+from .Carrinho import CarrinhoItem
